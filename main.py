@@ -1,7 +1,18 @@
 #so chunky
 
-import subprocess, time, os
+import subprocess, time
 from mcpi import minecraft
+
+from pathlib import Path
+
+if Path(".gitignore").exists():
+    print("continue")
+else:
+    print("The script will get angry if run in the wrong directory.")
+    print("Please try again after running this:")
+    print("cd " + str(Path(__file__).parent))
+
+subprocess.run(["mkdir", "-p","backup"])
 
 while True:
     
@@ -31,7 +42,7 @@ while True:
 
     print("[Python] Giving server 5 seconds to stop")
     time.sleep(5)
-    
+
     print("[Python] Backing up world files")
     subprocess.run(["mkdir", "-p","backup"])
     subprocess.run(["cp", "-r", "games/com.mojang/minecraftWorlds/pbpt", "backup"])
