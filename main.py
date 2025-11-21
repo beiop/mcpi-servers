@@ -7,7 +7,7 @@ else:
     print("The script will get angry if run in the wrong directory.")
     print("Please try again after running this:")
     print("cd " + str(Path(__file__).parent))
-    print("========================================================")
+    exit()
 
 import subprocess, time
 from mcpi import minecraft
