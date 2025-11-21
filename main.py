@@ -1,8 +1,4 @@
-#so chunky
-
-import subprocess, time
-from mcpi import minecraft
-
+#quell the script's anger
 from pathlib import Path
 
 if Path(".gitignore").exists():
@@ -11,6 +7,10 @@ else:
     print("The script will get angry if run in the wrong directory.")
     print("Please try again after running this:")
     print("cd " + str(Path(__file__).parent))
+
+
+import subprocess, time
+from mcpi import minecraft
 
 subprocess.run(["mkdir", "-p","backup"])
 
