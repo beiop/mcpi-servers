@@ -22,7 +22,7 @@ while True:
     p = subprocess.Popen("./minecraft-pi-reborn-server-2.5.4-amd64.AppImage",cwd=CWD
 )
 
-    time.sleep(10)
+    time.sleep(60)
     print("[PYTHON] connecting to API")
     mc = minecraft.Minecraft.create()
     mc.postToChat("API connected!")
