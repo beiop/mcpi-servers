@@ -1,0 +1,39 @@
+#so chunky
+
+import subprocess, time, os
+from mcpi import minecraft
+
+while True:
+    
+    print("[Python] Starting Server")
+    p = subprocess.Popen("/home/beiop/Documents/vs/mcpi-servers/minecraft-pi-reborn-server-2.5.4-amd64.AppImage")
+
+    time.sleep(10)
+    print("[PYTHON] connecting to API")
+    mc = minecraft.Minecraft.create()
+    mc.postToChat("API connected!")
+    
+    #wait awhile before updating again
+    time.sleep(86400) #604800
+    mc.postToChat("5 minutes till server restarts for backup")
+    time.sleep(60)
+    mc.postToChat("4 minutes till server restarts for backup")
+    time.sleep(60)
+    mc.postToChat("3 minutes till server restarts for backup")
+    time.sleep(60)
+    mc.postToChat("2 minutes till server restarts for backup")
+    time.sleep(60)
+    mc.postToChat("1 minute till server restarts for backup")
+    time.sleep(60)
+
+    mc.postToChat("Server restarting")
+    p.terminate()
+
+    print("[Python] Giving server 5 seconds to stop")
+    time.sleep(5)
+    
+    print("[Python] Backing up world files")
+    subprocess.run(["mkdir", "-p","backup"])
+    subprocess.run(["cp", "-r", "games/com.mojang/minecraftWorlds/pbpt", "backup"])
+    subprocess.run("zip -r backup/pbpt_$(date +'%Y-%m-%d').zip backup/pbpt", shell=True)
+    subprocess.run(["rm", "-r","backup/pbpt"])
