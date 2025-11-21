@@ -7,17 +7,20 @@ else:
     print("The script will get angry if run in the wrong directory.")
     print("Please try again after running this:")
     print("cd " + str(Path(__file__).parent))
-
+    print("========================================================")
 
 import subprocess, time
 from mcpi import minecraft
 
 subprocess.run(["mkdir", "-p","backup"])
+CWD=Path(__file__).parent
+
 
 while True:
     
     print("[Python] Starting Server")
-    p = subprocess.Popen("/home/beiop/Documents/vs/mcpi-servers/minecraft-pi-reborn-server-2.5.4-amd64.AppImage")
+    p = subprocess.Popen("./minecraft-pi-reborn-server-2.5.4-amd64.AppImage",cwd=CWD
+)
 
     time.sleep(10)
     print("[PYTHON] connecting to API")
