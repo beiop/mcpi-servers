@@ -2,3 +2,5 @@ games
 backup
 sdk
 mods
+.venv
+py.py
