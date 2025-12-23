@@ -14,7 +14,7 @@ import time
 from mcpi import minecraft
 import datetime
 now = datetime.datetime.now()
-def rn(strin):return '\033[92m' + strin + " " + str(now.time()) + ' \033[96m'
+def rn(strin):return '\033[92m' + strin + " " + str(datetime.datetime.now().strftime('%m-%d-%Y_%H-%M-%S')) + ' \033[96m'
 
 
 #Making various directories to avoid errors later
