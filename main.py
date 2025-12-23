@@ -76,7 +76,7 @@ while True:
     mc.postToChat("API working!")
     
     #wait awhile before updating again
-    time.sleep(4) #86400 seconds in one day 43200
+    time.sleep(43200) #86400 seconds in one day 43200
     mc.postToChat("5 minutes till server restarts for backup.")
     time.sleep(3)
     mc.postToChat("Any changes made within the last 30 seconds before a restart")
