@@ -126,7 +126,7 @@ while True:
         "zip", 
         "-r",
         "-j",
-        f"anarchy_files/backup/anarchy_{datetime.datetime.now().strftime('%Y-%m-%d_%H-%M')}.zip",
+        f"anarchy_files/backup/anarchy_{datetime.datetime.now().strftime('%m-%d-%Y_%H-%M')}.zip",
         "anarchy_files/backup/pbpt/"])
     subprocess.run([
         "rm",
@@ -142,7 +142,7 @@ while True:
         "zip", 
         "-r",
         "-j",
-        f"survival_files/backup/survival_{datetime.datetime.now().strftime('%Y-%m-%d_%H-%M')}.zip",
+        f"survival_files/backup/survival_{datetime.datetime.now().strftime('%m-%d-%Y_%H-%M')}.zip",
         "survival_files/backup/survival/"])
     subprocess.run([
         "rm",
@@ -158,7 +158,7 @@ while True:
         "zip", 
         "-r",
         "-j",
-        f"creative_files/backup/creative_{datetime.datetime.now().strftime('%Y-%m-%d_%H-%M')}.zip",
+        f"creative_files/backup/creative_{datetime.datetime.now().strftime('%m-%d-%Y_%H-%M')}.zip",
         "creative_files/backup/creative/"])
     subprocess.run([
         "rm",
