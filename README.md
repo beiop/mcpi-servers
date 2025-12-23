@@ -11,10 +11,14 @@ server backup script &amp; downdetector for mcpi
 
 ----
 #### Port list:
+| server port | api port | server name    |
+|-------------|----------|----------------|
+| 19136       | 4710     | Beiop Creative |
+| 19135  ★    | 4709     | Pbpt Anarchy 2 |
+| 19134  ★    | 4708     | Beiop Survival |
 
-19136. Pbpt Anarchy 2 4711 <-- api ports
-19135. Beiop Survival 4710
-19134. Beiop Creative 4709
+ ★ within the auto discovering port range.
+
 ----
 Shorter term todo list:
 
