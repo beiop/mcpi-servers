@@ -4,3 +4,4 @@ sdk
 mods
 .venv
 py.py
+/__pycache__/*
