@@ -16,6 +16,7 @@ server backup script &amp; downdetector for mcpi
 | 19136       | 4710     | Beiop Creative |
 | 19135  ★    | 4709     | Pbpt Anarchy 2 |
 | 19134  ★    | 4708     | Beiop Survival |
+| 19137       | 4707     | Sports         |
 
  ★ within the auto discovering port range.
 
@@ -26,10 +27,13 @@ Shorter term todo list:
 * DONE - Need to be able to run 2 instances on same port.
 * DONE - find a way to run minecraft from a different directory
 * DONE - Make script to move the old world files from their old locations to the new ones
-* NEXT - Check if ports 19132-19135 show up when port forwarding
-* NEXT - Make the new script use the new dirs for the main server
-* NEXT - run N number of servers separate from each other
-
+* THEY DONT??!?! - Check if ports 19132-19135 show up when port forwarding
+* DONE - Make the new script use the new dirs for the main server
+* DONE - run N number of servers separate from each other
+* CHOCOLATE BREAK!!!
+* NEXT - Teleport players as soon as they join
+* NEXT - sort players into teams by making them climb ladders
+* NEXT - Only start game when players are on different platforms.
 ----
 _ _
 
@@ -42,3 +46,5 @@ _ _
 RUN_DIR = Path("/path") 
 
 ```
+3.0.0 version:
+Try Downloading The Game From Multiple Sources (And Add A Timeout)

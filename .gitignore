@@ -1,7 +1,9 @@
-games
+games/
 backup
 sdk
 mods
 .venv
 py.py
-__pycache__
+__pycache__/
+versions
+overrides

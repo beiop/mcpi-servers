@@ -4,6 +4,8 @@ import sys
 from .util import flatten_parameters_to_bytestring
 
 """ @author: Aron Nieminen, Mojang AB"""
+""" Script has been modified by Beiop to stop raising errors and quiting. To reset, change line like 57 from print() to raise"""
+
 
 class RequestError(Exception):
     pass
@@ -53,7 +55,8 @@ class Connection:
         """Receives data. Note that the trailing newline '\n' is trimmed"""
         s = self.socket.makefile("r").readline().rstrip("\n")
         if s == Connection.RequestFailed:
-            raise RequestError("%s failed"%self.lastSent.strip())
+            print(RequestError("%s failed"%self.lastSent.strip()))
+            #raise RequestError("%s failed"%self.lastSent.strip())
         return s
 
     def sendReceive(self, *data):

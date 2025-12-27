@@ -93,6 +93,23 @@ class CmdEntity(CmdPositioner):
     def __init__(self, connection):
         CmdPositioner.__init__(self, connection, b"entity")
     
+    def disableCompatMode(self,bool):
+        """send True to disable the compatibility mode. Outputs reborn_version"""
+        if bool:
+            return self.conn.sendReceive(b"reborn.disableCompatMode")
+        else:
+            return self.conn.sendReceive(b"reborn.enableCompatMode")
+    
+    def setVelocity(self,entity,veclocity_x=0,veclocity_y=0,veclocity_z=0):
+        """Description: Set the specified entity's velocity."""
+        return self.conn.send(b'entity.setVelocity',entity,veclocity_x,veclocity_y,veclocity_z)
+
+    def spawnItem(self,x,y,z,item_id,count,data=0):
+        """world.spawnItem(:x:,:y:,:z:,item_id,count,data)"""
+        print(b"world.spawnItem",x,y,z,item_id,count,data)
+        return self.conn.sendReceive(b"world.spawnItem",x,y,z,item_id,count,data)
+        
+
     def getName(self, id):
         """Get the list name of the player with entity id => [name:str]
         
@@ -329,8 +346,10 @@ class Minecraft:
     def getPlayerEntityIds(self):
         """Get the entity ids of the connected players => [id:int]"""
         ids = self.conn.sendReceive(b"world.getPlayerIds")
-        return list(map(int, ids.split("|")))
-
+        if ids != "":
+            return list(map(int, ids.split("|")))
+        return []
+    
     def getPlayerEntityId(self, name):
         """Get the entity id of the named player => [id:int]"""
         return int(self.conn.sendReceive(b"world.getPlayerId", name))
