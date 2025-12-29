@@ -88,17 +88,27 @@ class CmdPositioner:
         """Set a player setting (setting, status). keys: autojump"""
         self.conn.send(self.pkg + b".setting", setting, 1 if bool(status) else 0)
 
+class CmdReborn():
+    """Methods for reborning ig"""
+    def __init__(self, connection):
+        self.conn = connection
+
+    def disableCompatMode(self):
+        """Disable the compatibility mode. Output: reborn_version"""
+        return self.conn.sendReceive(b"reborn.disableCompatMode")
+    def enableCompatMode(self):
+        """Re-enable the compatibility mode"""
+        self.conn.send(b"reborn.enableCompatMode")
+
+
+        
+
+
 class CmdEntity(CmdPositioner):
     """Methods for entities"""
     def __init__(self, connection):
         CmdPositioner.__init__(self, connection, b"entity")
     
-    def disableCompatMode(self,bool):
-        """send True to disable the compatibility mode. Outputs reborn_version"""
-        if bool:
-            return self.conn.sendReceive(b"reborn.disableCompatMode")
-        else:
-            return self.conn.sendReceive(b"reborn.enableCompatMode")
     
     def setVelocity(self,entity,veclocity_x=0,veclocity_y=0,veclocity_z=0):
         """Description: Set the specified entity's velocity."""
@@ -298,6 +308,7 @@ class Minecraft:
         self.entity = CmdEntity(connection)
         self.player = CmdPlayer(connection)
         self.events = CmdEvents(connection)
+        self.reborn = CmdReborn(connection)
 
     def getBlock(self, *args):
         """Get block (x,y,z) => id:int"""

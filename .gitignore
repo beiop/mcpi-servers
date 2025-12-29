@@ -7,3 +7,4 @@ py.py
 __pycache__/
 versions
 overrides
+mcpi/__pycache__
