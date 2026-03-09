@@ -8,3 +8,14 @@ __pycache__/
 versions
 overrides
 mcpi/__pycache__
+__pycache__/
+
+*.pyc
+/home/beiop/Documents/vs/mcpi-servers/mcpi/__pycache__/block.cpython-312.pyc
+
+IP2LOCATION-LITE-DB1.CSV
+locale-getter.py
+#HOW THE HECLKELECKSL DO I IGNORE PYCACHE?????
+turfwars_files/logs
+cakewars_files/logs
+test_world_for_sports_files/logs

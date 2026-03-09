@@ -18,10 +18,10 @@ def rn(strin):return '\033[92m' + strin + " " + str(datetime.datetime.now().strf
 
 
 #Making various directories to avoid errors later
-Path("anarchy_files").mkdir(parents=True, exist_ok=True)  # thing that creates folder, similar to mkdir", "-p"
+Path("test_world_for_sports_files").mkdir(parents=True, exist_ok=True)  # thing that creates folder, similar to mkdir", "-p"
 Path("survival_files").mkdir(parents=True, exist_ok=True)  # thing that creates folder, similar to mkdir", "-p"
 Path("creative_files").mkdir(parents=True, exist_ok=True)  # thing that creates folder, similar to mkdir", "-p"
-Path("anarchy_files/backup").mkdir(parents=True, exist_ok=True)
+Path("test_world_for_sports_files/backup").mkdir(parents=True, exist_ok=True)
 Path("survival_files/backup").mkdir(parents=True, exist_ok=True)
 Path("creative_files/backup").mkdir(parents=True, exist_ok=True)
 
@@ -33,12 +33,63 @@ ogwd = str(Path(__file__).parent)
 
 while True:
     
+    #Script backs up servers first for now
+
+    #anarchy
+    subprocess.run([
+        "cp",
+        "-r",
+        "test_world_for_sports_files/games/com.mojang/minecraftWorlds/sports_building",
+        "test_world_for_sports_files/backup"])
+    subprocess.run([
+        "zip", 
+        "-r",
+        "-j",
+        f"test_world_for_sports_files/backup/anarchy_{datetime.datetime.now().strftime('%m-%d-%Y_%H-%M')}.zip",
+        "test_world_for_sports_files/backup/sports/"])
+    subprocess.run([
+        "rm",
+        "-r",
+        "test_world_for_sports_files/backup/sports"])
+    #survival
+    subprocess.run([
+        "cp",
+        "-r",
+        "survival_files/games/com.mojang/minecraftWorlds/survival",
+        "survival_files/backup"])
+    subprocess.run([
+        "zip", 
+        "-r",
+        "-j",
+        f"survival_files/backup/survival_{datetime.datetime.now().strftime('%m-%d-%Y_%H-%M')}.zip",
+        "survival_files/backup/survival/"])
+    subprocess.run([
+        "rm",
+        "-r",
+        "survival_files/backup/survival"])
+    #creative
+    subprocess.run([
+        "cp",
+        "-r",
+        "creative_files/games/com.mojang/minecraftWorlds/creative",
+        "creative_files/backup"])
+    subprocess.run([
+        "zip", 
+        "-r",
+        "-j",
+        f"creative_files/backup/creative_{datetime.datetime.now().strftime('%m-%d-%Y_%H-%M')}.zip",
+        "creative_files/backup/creative/"])
+    subprocess.run([
+        "rm",
+        "-r",
+        "creative_files/backup/creative"])
+
     print(rn("[Python] Starting Servers"))
     
-    env["MCPI_API_PORT"] = "4709"
+    env["MCPI_API_PORT"] = "4711"
     pa = subprocess.Popen(
-    [ogwd+"/minecraft-pi-reborn-server-2.5.4-amd64.AppImage"],
-    cwd=Path("anarchy_files"),
+    [ogwd+"/minecraft-pi-reborn-3.0.0-amd64.AppImage","--server"],
+    cwd=Path("test_world_for_sports_files"),
     env=env
     )
     env["MCPI_API_PORT"] = "4708"
@@ -56,7 +107,7 @@ while True:
     
     time.sleep(120) #60 seconds was enough for one server, now it's arbitrary amount for three servers. This is only nessisary the first time the world is generated
     print(rn("[PYTHON] testing APIs"))
-    mcA = minecraft.Minecraft.create("localhost",4709)
+    mcA = minecraft.Minecraft.create("localhost",4711)
     mcS = minecraft.Minecraft.create("localhost",4708)
     mcC = minecraft.Minecraft.create("localhost",4710)
 
@@ -115,52 +166,3 @@ while True:
 
     print(rn("[Python] Giving server 5 seconds to stop"))
     time.sleep(5)
-
-    #anarchy
-    subprocess.run([
-        "cp",
-        "-r",
-        "anarchy_files/games/com.mojang/minecraftWorlds/pbpt",
-        "anarchy_files/backup"])
-    subprocess.run([
-        "zip", 
-        "-r",
-        "-j",
-        f"anarchy_files/backup/anarchy_{datetime.datetime.now().strftime('%m-%d-%Y_%H-%M')}.zip",
-        "anarchy_files/backup/pbpt/"])
-    subprocess.run([
-        "rm",
-        "-r",
-        "anarchy_files/backup/pbpt"])
-    #survival
-    subprocess.run([
-        "cp",
-        "-r",
-        "survival_files/games/com.mojang/minecraftWorlds/survival",
-        "survival_files/backup"])
-    subprocess.run([
-        "zip", 
-        "-r",
-        "-j",
-        f"survival_files/backup/survival_{datetime.datetime.now().strftime('%m-%d-%Y_%H-%M')}.zip",
-        "survival_files/backup/survival/"])
-    subprocess.run([
-        "rm",
-        "-r",
-        "survival_files/backup/survival"])
-    #creative
-    subprocess.run([
-        "cp",
-        "-r",
-        "creative_files/games/com.mojang/minecraftWorlds/creative",
-        "creative_files/backup"])
-    subprocess.run([
-        "zip", 
-        "-r",
-        "-j",
-        f"creative_files/backup/creative_{datetime.datetime.now().strftime('%m-%d-%Y_%H-%M')}.zip",
-        "creative_files/backup/creative/"])
-    subprocess.run([
-        "rm",
-        "-r",
-        "creative_files/backup/creative"])

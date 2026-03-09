@@ -4,7 +4,10 @@ import sys
 from .util import flatten_parameters_to_bytestring
 
 """ @author: Aron Nieminen, Mojang AB"""
-""" Script has been modified by Beiop to stop raising errors and quiting. To reset, change line like 57 from print() to raise"""
+""" Script has been modified by Beiop to stop raising errors and quiting. To reset, change line like 57 from print() to raise and remove any "timeout" stuff"""
+
+timeoutVar = False
+
 
 
 class RequestError(Exception):
@@ -18,9 +21,14 @@ class Connection:
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.connect((address, port))
         self.lastSent = ""
+        self.socket.settimeout(2.0)  # seconds
+
 
     def drain(self):
         """Drains the socket of incoming data"""
+        #disabling this makes api go zoom! removes ability to receive tho.
+        #return
+
         while True:
             readable, _, _ = select.select([self.socket], [], [], 0.0)
             if not readable:
@@ -46,7 +54,7 @@ class Connection:
         The actual socket interaction from self.send, extracted for easier mocking
         and testing
         """
-        self.drain()
+        #self.drain()
         self.lastSent = s
 
         self.socket.sendall(s)
@@ -61,5 +69,11 @@ class Connection:
 
     def sendReceive(self, *data):
         """Sends and receive data"""
-        self.send(*data)
-        return self.receive()
+        try: 
+            self.send(*data)
+            return self.receive()
+        except: 
+            global timeoutVar
+            timeoutVar = True
+            return ""
+        

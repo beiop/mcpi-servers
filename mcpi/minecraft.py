@@ -100,6 +100,17 @@ class CmdReborn():
         """Re-enable the compatibility mode"""
         self.conn.send(b"reborn.enableCompatMode")
 
+class CmdWorld():
+    """Methods for reborning ig"""
+    def __init__(self, connection):
+        self.conn = connection
+
+    def removeEntities(self,entity_type_id):
+        """Remove all entities of the specified type.
+        Output: number_of_entities_removed"""
+        return self.conn.sendReceive(b"world.removeEntities",entity_type_id)
+    
+
 
         
 
@@ -114,11 +125,24 @@ class CmdEntity(CmdPositioner):
         """Description: Set the specified entity's velocity."""
         return self.conn.send(b'entity.setVelocity',entity,veclocity_x,veclocity_y,veclocity_z)
 
-    def spawnItem(self,x,y,z,item_id,count,data=0):
-        """world.spawnItem(:x:,:y:,:z:,item_id,count,data)"""
-        print(b"world.spawnItem",x,y,z,item_id,count,data)
-        return self.conn.sendReceive(b"world.spawnItem",x,y,z,item_id,count,data)
+    def spawnItem(self,*args):
+        """world.spawnItem(:x:,:y:,:z:,item_id,count=1,data=0)"""
+        oldArgs = args
+        args = list(args)
         
+        if len(args) == 4: #code to allow the use of *args while also making count and data optional
+            args.append(1)
+        if len(args) == 5:
+            args.append(0)
+        args = tuple(args)
+        print(args,oldArgs)
+        #print("world.spawnItem",x,y,z,item_id,count,data)
+        return self.conn.sendReceive(b"world.spawnItem",args)
+    
+    def getSelectedItem(self,entity_id):
+        """Description: Retrieve the selected item of the specified entity. For humanoid mobs (like players), this will be their current carried item. For Dropped Items, this will be the item itself. This will return an item ID of 0 if the entity is not currently selecting an item.
+        Output: item_id,count,data"""
+        return self.conn.sendReceive(b"entity.getSelectedItem",entity_id)
 
     def getName(self, id):
         """Get the list name of the player with entity id => [name:str]
@@ -309,6 +333,7 @@ class Minecraft:
         self.player = CmdPlayer(connection)
         self.events = CmdEvents(connection)
         self.reborn = CmdReborn(connection)
+        self.world = CmdWorld(connection)
 
     def getBlock(self, *args):
         """Get block (x,y,z) => id:int"""
@@ -348,7 +373,8 @@ class Minecraft:
 
     def spawnEntity(self, *args):
         """Spawn entity (x,y,z,id)"""
-        return int(self.conn.sendReceive(b"world.spawnEntity", args))
+        return self.conn.sendReceive(b"world.spawnEntity", args)
+#       return int(self.conn.sendReceive(b"world.spawnEntity", args))
 
     def getHeight(self, *args):
         """Get the height of the world (x,z) => int"""
@@ -391,7 +417,12 @@ class Minecraft:
         """Return a list of all currently loaded entities (EntityType:int) => [[entityId:int,entityTypeId:int,entityTypeName:str,posX:float,posY:float,posZ:float]]"""
         s = self.conn.sendReceive(b"world.getEntities", typeId)
         entities = [e for e in s.split("|") if e]
-        return [[int(n.split(",")[0]), int(n.split(",")[1]), n.split(",")[2], float(n.split(",")[3]), float(n.split(",")[4]), float(n.split(",")[5])] for n in entities]
+        result = []
+        for n in entities:
+            x, y, a, b, c = n.split(",")
+            result.append([int(x), int(y), float(a), float(b), float(c)])
+        return result
+        #return [[int(n.split(",")[0]), int(n.split(",")[1]), n.split(",")[2], float(n.split(",")[3]), float(n.split(",")[4]), float(n.split(",")[5])] for n in entities]
 
     def removeEntity(self, id):
         """Remove entity by id (entityId:int) => (removedEntitiesCount:int)"""
